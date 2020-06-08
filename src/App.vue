@@ -1,22 +1,35 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Table :titles="titles" :items="products"/>
+    <footer class="text-right">
+      <div class="container">
+         Made with <div style="display: inline-block;width: 20px"><img style="width:100%;" alt="Vue logo" src="./assets/logo.png"></div>
+      </div>
+    </footer>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Table from './components/Table.vue'
+import { mapGetters } from 'vuex';
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Table
+  },
+  computed: {
+     ...mapGetters({
+      products: 'foodtable/getProducts',
+      titles: 'foodtable/getTitles'
+     })
+  },
+  created() {
+    this.$store.dispatch('foodtable/getProducts')
   }
 }
 </script>
 
-<style>
+<style >
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -25,4 +38,7 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+
+
 </style>
